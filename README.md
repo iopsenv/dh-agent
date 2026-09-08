@@ -49,6 +49,14 @@ docker compose up -d
 - The volume is `external: true` on purpose — a `docker compose down` (even `down -v`) won't touch it. It has to be removed manually with `docker volume rm` if you no longer need the backups.
 - The container mounts `/var/run/docker.sock`, giving it full control over Docker on that host. Only deploy this on machines you intend to manage through Dockhand.
 
+## Acknowledgments
+
+The setup in this repo (compose file structure, bootstrap script, docs) was
+developed with the help of Claude Code. The idea, the requirements, and the
+decisions behind it (external volumes for safe backups, per-host `.env`,
+polling-based git updates instead of webhooks, etc.) are mine — Claude helped
+turn them into working scripts and documentation.
+
 ## Future feature mental note :)
 
 - to add optional systemd service + timer for git reset --hard origin/main
