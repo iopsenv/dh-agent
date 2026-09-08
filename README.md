@@ -1,1 +1,1 @@
-# dh-agent
+# DockHand-agent container

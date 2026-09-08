@@ -1,0 +1,35 @@
+name: x-dockhand-agent
+
+volumes:
+  x-dockhand-stacks:
+    external: true
+
+networks:
+  traefik-proxy:
+    external: true
+
+services:
+  x_dockhand_agent:
+    image: ghcr.io/finsys/hawser:latest
+    container_name: x-dockhand-agent
+    hostname: ${CT_HOSTNAME}
+    restart: always
+    networks: [traefik-proxy]
+    environment:
+      - TZ=Europe/Bucharest
+      - LOG_LEVEL=warn
+      - STACKS_DIR=/data/stacks
+      - AGENT_NAME=${DH_AGENT_NAME}
+      - UMASK=002
+      - DOCKER_SOCKET=/var/run/docker.sock
+      # --- Obtain these values from your Dockhand Main dashboard adding 'Environments'
+      - DOCKHAND_SERVER_URL=wss://${DH_MAIN_HOSTNAME}/api/hawser/connect
+      - TOKEN=${DH_TOKEN}
+      - TLS_SKIP_VERIFY=false
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dockhand-stacks:/data/stacks
+    labels:
+      - dockhand.io/update=false
+      - diun.enable=true
+      - diun.notify_on=new;update
