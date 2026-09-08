@@ -15,8 +15,6 @@ cd x-dockhand-agent
 bash bootstrap.sh
 ```
 
-> **Note:** this has to be `git clone <url> && cd <dir> && bash bootstrap.sh`, not `git clone | bash`. `git clone` doesn't print anything usable to stdout — it just writes files to disk — so there's nothing to pipe. The three commands above (or chained with `&&`) are the actual one-liner equivalent.
-
 `bootstrap.sh` will:
 
 1. Create `.env` from `.env.example` if it doesn't exist yet
@@ -53,4 +51,4 @@ docker compose up -d
 
 ## Future feature mental note :)
 
-- add optional systemd service + timer for git reset --hard origin/main
+- to add optional systemd service + timer for git reset --hard origin/main
