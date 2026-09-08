@@ -1,11 +1,7 @@
 name: x-dockhand-agent
 
 volumes:
-  x-dockhand-stacks:
-    external: true
-
-networks:
-  traefik-proxy:
+  x-dockhand-stacks_${DH_AGENT_NAME}:
     external: true
 
 services:
@@ -14,7 +10,6 @@ services:
     container_name: x-dockhand-agent
     hostname: ${CT_HOSTNAME}
     restart: always
-    networks: [traefik-proxy]
     environment:
       - TZ=Europe/Bucharest
       - LOG_LEVEL=warn
@@ -28,7 +23,7 @@ services:
       - TLS_SKIP_VERIFY=false
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - dockhand-stacks:/data/stacks
+      - x-dockhand-stacks_${DH_AGENT_NAME}:/data/stacks
     labels:
       - dockhand.io/update=false
       - diun.enable=true
