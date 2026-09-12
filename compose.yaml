@@ -1,8 +1,9 @@
 name: x-dockhand-agent
 
 volumes:
-  x-dockhand-stacks_${DH_AGENT_NAME}:
+  dockhand_agent_volume:
     external: true
+    name: "x-dockhand-stacks_${DH_AGENT_NAME}"
 
 services:
   x_dockhand_agent:
@@ -23,7 +24,7 @@ services:
       - TLS_SKIP_VERIFY=false
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - x-dockhand-stacks_${DH_AGENT_NAME}:/data/stacks
+      - dockhand_agent_volume:/data/stacks
     labels:
       - dockhand.io/update=false
       - diun.enable=true
